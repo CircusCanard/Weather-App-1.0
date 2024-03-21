@@ -19,6 +19,7 @@ async function checkWeather(city) {
 	} else {
 		const data = await response.json();
 		console.log(data);
+		console.log(data.sys.country);
 
 		// removing unnecessary 'Arrondissement' from city name if present
 		document.querySelector(".city").innerText = data.name.includes(
@@ -30,7 +31,8 @@ async function checkWeather(city) {
 		document.querySelector(".temp").innerText =
 			Math.round(data.main.temp) + "°c";
 		document.querySelector(".humidity").innerText = data.main.humidity + "%";
-		document.querySelector(".wind").innerText = data.wind.speed + " km/h";
+		document.querySelector(".wind").innerText =
+			data.wind.speed.toFixed(1) + " km/h";
 
 		//  get weather icons from website
 		// console.log(data.weather[0].main);
@@ -70,4 +72,25 @@ searchBtn.addEventListener("click", () => {
 	checkWeather(city);
 });
 
-// checkWeather(cityName);
+checkWeather(cityName);
+
+// try catch example
+// async function getWeatherData(city) {
+// 	const apiKey = "your_api_key_here";
+// 	const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+
+// 	try {
+// 			const response = await fetch(apiUrl);
+// 			const data = await response.json();
+// 			const iconCode = data.weather[0].icon;
+// 			const iconUrl = `http://openweathermap.org/img/wn/${iconCode}.png`;
+
+// 			// Assuming you have an img element with id="weatherIcon"
+// 			document.getElementById("weatherIcon").src = iconUrl;
+// 	} catch (error) {
+// 			console.error("Error fetching weather data:", error);
+// 	}
+// }
+
+// // Example usage
+// getWeatherData("London");
